@@ -914,7 +914,7 @@ module VmCommon
 
   def parent_choices(ids)
     @parent_choices = {}
-    @parent_choices[Digest::MD5.hexdigest(ids.inspect)] ||= begin
+    @parent_choices[Digest::SHA256.hexdigest(ids.inspect)] ||= begin
       ems_ids = VmOrTemplate.where(:id => ids).distinct.pluck(:ems_id).compact
       parent_item_scope = Rbac.filtered(VmOrTemplate.where(:ems_id => ems_ids).where.not(:id => ids).order(:name))
 
